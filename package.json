@@ -1,0 +1,14 @@
+{
+  "name": "anime-dub-schedule",
+  "version": "0.0.0",
+  "description": "Anime Dub Schedule",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  },
+  "dependencies": {
+    "axios": "^0.25.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.2"
+  }
+}

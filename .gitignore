@@ -74,3 +74,16 @@ typings/
 
 # FuseBox cache
 .fusebox/
+
+# Settings Files
+*/settings/
+
+# Visual Studio
+.vs/
+*.sln
+*.njsproj
+*.njsproj.user
+
+obj/
+
+data/
