@@ -40,7 +40,14 @@ async function getShow(showName) {
             const result = await getShow(showName);
             return result;
         }
-        process.exit(1);
+        else if (err.response.status == 404) {
+            tooMany = true;
+            return {
+                name: showName,
+                id: "Unknown",
+                coverImage: "static/img/nocover.png"
+            }
+        }
     });
 
     if (tooMany) return response;

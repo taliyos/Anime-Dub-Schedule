@@ -103,6 +103,11 @@ function getShowTitle(item) {
     } else if (showName.includes("Movie")) {
         showName = showName.substring(showName.indexOf("Movie")+7);
         movie = true;
+    } else if (showName.includes("Unconfirmed")) {
+        showName = showName.substring(showName.indexOf("Unconfirmed") + 13);
+        if (showName.includes("#")) {
+            showName = showName.substring(showName.indexOf("#") + (showName.indexOf(" ") - showName.indexOf("#") + 1));
+        }
     }
     return {
         "name": showName,
@@ -111,7 +116,8 @@ function getShowTitle(item) {
 }
 
 function getShowEpisodeAndSeason(item) {
-    let episodeNum = item.title.substring(1, item.title.indexOf(' '));
+    let sub = item.title.substring(item.title.indexOf(`#`) + 1, item.title.length);
+    let episodeNum = sub.substring(0, sub.indexOf(' '));
     if (item.title.indexOf(`#`) == -1) episodeNum = -1;
     let seasonNum = /Season /.exec(item.title);
     if (seasonNum != null) {
