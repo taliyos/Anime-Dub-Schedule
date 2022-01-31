@@ -2,6 +2,8 @@
 
 > A better name at some point?
 
+Live at [talios.software](https://talios.software)
+
 ## Overview
 
 Brings a new way to check when your favorite anime dubs are about to be released! Pulls release date information from the community maintained [TeamUp](https://teamup.com/ksdhpfjcouprnauwda) and key art and integration from [AniList](www.anilist.co).
