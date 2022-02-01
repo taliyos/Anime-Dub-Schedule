@@ -7,7 +7,7 @@ app.use(express.json());
 app.use('/static', express.static(`public`));
 
 app.set(`view engine`, `ejs`);
-const port = 80;
+const port = 3000;
 
 app.set(`calendar`, null);
 
