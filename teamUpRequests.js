@@ -39,7 +39,11 @@ async function loadConfig() {
 
 async function getShows() {
     let today = new Date();
-    var start = today.getUTCFullYear()+"-"+(today.getUTCMonth()+1)+"-"+(today.getUTCDate() - 7)
+
+    let calStartDate = new Date();
+    calStartDate.setDate(calStartDate.getDate() - 7);
+    console.log(calStartDate);
+    let start = `${calStartDate.getUTCFullYear()}-${calStartDate.getUTCMonth() + 1}-${calStartDate.getUTCDate()}`;
     var end = today.getUTCFullYear()+"-"+(today.getUTCMonth()+2)+"-"+today.getUTCDate();
     var url = `https://api.teamup.com/ksdhpfjcouprnauwda/events?startDate=`+start+`&endDate=`+end;
 
