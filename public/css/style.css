@@ -92,7 +92,7 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 85%;
+  width: 85vw;
   height: 100%;
 }
 .main .showSection .shows .showImages {
@@ -158,9 +158,13 @@ body {
   border: 0.1rem white solid;
   -webkit-box-shadow: 0 0 0.3rem white;
           box-shadow: 0 0 0.3rem white;
-  -webkit-transition: opacity 0.25s ease-in-out;
-  transition: opacity 0.25s ease-in-out;
+  -webkit-transition: -webkit-transform 0.25s ease-out;
+  transition: -webkit-transform 0.25s ease-out;
+  transition: transform 0.25s ease-out;
+  transition: transform 0.25s ease-out, -webkit-transform 0.25s ease-out;
   opacity: 0;
+  -webkit-transform: scale(0.9);
+          transform: scale(0.9);
 }
 .main .showSection .shows .showImages .show .showHover .showName {
   font-weight: 600;
@@ -175,4 +179,6 @@ body {
 }
 .main .showSection .shows .showImages .show:hover .showHover {
   opacity: 1;
+  -webkit-transform: scale(1);
+          transform: scale(1);
 }
