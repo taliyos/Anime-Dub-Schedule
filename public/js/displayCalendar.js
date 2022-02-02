@@ -112,9 +112,21 @@ function setActiveShow(row, item) {
     let show = schedule[row].GetShow(item);
     console.log(schedule[row]);
 
-    showInfo = document.getElementsByClassName("showInfo")[0];
-    showInfo.getElementsByTagName("h1")[0].textContent = show.name;
-    showInfo.getElementsByTagName("h2")[0].textContent = getEpisodeAndSeason(show.episode, show.season, show.movie);
+    let releaseTime = new Date(show.time.time);
+    let hours = releaseTime.getHours();
+    let isAM = "AM";
+    if (hours >= 12) {
+        isAM = "PM";
+        if (hours > 12) hours -= 12;
+    }
+
+    document.getElementById("showName").textContent = show.name;
+    document.getElementById("hours").textContent = hours;
+    document.getElementById("minutes").textContent = releaseTime.getMinutes();
+    if (releaseTime.getMinutes() < 10) document.getElementById("minutes").textContent = "0" + releaseTime.getMinutes().toString();
+
+    document.getElementById("half").textContent = isAM;
+    document.getElementById("episode").textContent = getEpisodeAndSeason(show.episode, show.season, show.movie);
     let platforms = show.platforms;
     let platformHTML = "";
     for (let i = 0; i < show.platforms.length; i++) {
@@ -136,7 +148,7 @@ function setActiveShow(row, item) {
             platformHTML += "Home Video Only";
         }
     }
-    showInfo.getElementsByTagName("h3")[0].innerHTML = platformHTML;
+    document.getElementById("platforms").innerHTML = platformHTML;
 }
 
 function getEpisodeAndSeason(episode, season, movie) {
