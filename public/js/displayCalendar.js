@@ -57,20 +57,62 @@ function addShowToScreen(anime, shows, showSection, showImages) {
     showContainer.tabIndex = tab;
     tab++;
 
+    let showArtContainer = document.createElement("div");
+    showArtContainer.className = "showArt";
+
     let showImg = document.createElement("img");
     showImg.src = anime.showImg;
 
-    showContainer.addEventListener("click", function() {
-        setActiveShow(showContainer.dataset.row, showContainer.dataset.num);
-    });
-    showContainer.addEventListener("keyup", function(event) {
-        if (event.keyCode == 9 || event.keyCode == 13) {
-            event.preventDefault();
-            setActiveShow(showContainer.dataset.row, showContainer.dataset.num);
-        }
-    });
+    let showHoverContainer = document.createElement("div");
+    showHoverContainer.className = "showHover";
 
-    showContainer.appendChild(showImg);
+    let showNameContainer = document.createElement("div");
+    showNameContainer.className = "showName";
+    showNameContainer.textContent = anime.name;
+
+    let showTimeContainer = document.createElement("div");
+    showTimeContainer.className = "time";
+    let releaseTime = new Date(anime.time.time);
+    let hours = releaseTime.getHours();
+    let noon = "AM";
+    if (hours >= 12) {
+        noon = "PM";
+        if (hours > 12) hours -= 12;
+    }
+    let showHourSpan = document.createElement("span");
+    showHourSpan.className="hours";
+    showHourSpan.textContent = hours;
+    let showMinutesSpan = document.createElement("span");
+    showMinutesSpan.className = "minutes";
+    let min = releaseTime.getMinutes();
+    if (min < 10) min = "0" + releaseTime.getMinutes().toString();
+    showMinutesSpan.textContent = min;
+    let showNoonSpan = document.createElement("span");
+    showNoonSpan.className = "half";
+    showNoonSpan.textContent = noon;
+
+    showTimeContainer.appendChild(showHourSpan);
+    showTimeContainer.innerHTML += ":";
+    showTimeContainer.appendChild(showMinutesSpan);
+    showTimeContainer.appendChild(showNoonSpan);
+
+    let showEpisodeContainer = document.createElement("div");
+    showEpisodeContainer.className = "episode";
+    showEpisodeContainer.textContent = getEpisodeAndSeason(anime.episode, anime.season, anime.movie);
+
+    let showPlatformsContainer = document.createElement("div");
+    showPlatformsContainer.className = "platforms";
+    showPlatformsContainer.innerHTML = getPlatforms(anime.platforms)
+
+    showArtContainer.appendChild(showImg);
+
+    showHoverContainer.appendChild(showNameContainer);
+    showHoverContainer.appendChild(showTimeContainer);
+    showHoverContainer.appendChild(showEpisodeContainer);
+    showHoverContainer.appendChild(showPlatformsContainer);
+
+    showContainer.appendChild(showArtContainer);
+    showContainer.appendChild(showHoverContainer);
     showImages.appendChild(showContainer);
 
     showSection.appendChild(shows);
@@ -108,49 +150,6 @@ function addDate(month, day, dayOfWeek, showSection, showImages) {
     return html_shows;
 }
 
-function setActiveShow(row, item) {
-    let show = schedule[row].GetShow(item);
-    console.log(schedule[row]);
-
-    let releaseTime = new Date(show.time.time);
-    let hours = releaseTime.getHours();
-    let isAM = "AM";
-    if (hours >= 12) {
-        isAM = "PM";
-        if (hours > 12) hours -= 12;
-    }
-
-    document.getElementById("showName").textContent = show.name;
-    document.getElementById("hours").textContent = hours;
-    document.getElementById("minutes").textContent = releaseTime.getMinutes();
-    if (releaseTime.getMinutes() < 10) document.getElementById("minutes").textContent = "0" + releaseTime.getMinutes().toString();
-
-    document.getElementById("half").textContent = isAM;
-    document.getElementById("episode").textContent = getEpisodeAndSeason(show.episode, show.season, show.movie);
-    let platforms = show.platforms;
-    let platformHTML = "";
-    for (let i = 0; i < show.platforms.length; i++) {
-        if (platforms[i] == 0) {
-            platformHTML += "<img src=\"static/icons/Funimation.png\"/>"+"Funimation ";
-        } else if (platforms[i] == 1) {
-            platformHTML += "<img src=\"static/icons/Crunchyroll.png\"/>"+"Crunchyroll ";
-        }
-        else if (platforms[i] == 2) {
-            platformHTML += "<img src=\"static/icons/HiDive.png\"/>"+"HiDive ";
-        }
-        else if (platforms[i] == 3) {
-            platformHTML += "<img src=\"static/icons/Netflix.png\"/>"+"Netflix ";
-        }
-        else if (platforms[i] == 4) {
-            platformHTML += "Other Streaming";
-        } 
-        else {
-            platformHTML += "Home Video Only";
-        }
-    }
-    document.getElementById("platforms").innerHTML = platformHTML;
-}
-
 function getEpisodeAndSeason(episode, season, movie) {
     if (season == null || movie) {
         if (episode == -1) {
@@ -163,7 +162,7 @@ function getEpisodeAndSeason(episode, season, movie) {
 
 function getPlatforms(platforms) {
     let platformHTML = "";
-    for (let i = 0; i < show.platforms.length; i++) {
+    for (let i = 0; i < platforms.length; i++) {
         if (platforms[i] == 0) {
             platformHTML += "<img src=\"static/icons/Funimation.png\"/>"+"Funimation ";
         } else if (platforms[i] == 1) {
