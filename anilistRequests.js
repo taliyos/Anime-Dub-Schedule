@@ -2,20 +2,34 @@ const axios = require(`axios`);
 const fs = require(`fs/promises`);
 
 let query = `
-query fetchShow ($search: String) {
-    Media (search: $search, type: ANIME) {
-      id
-      coverImage {
-          extraLarge
-      }
-      status
+query fetchShow ($page: Int, $perPage: Int, $search: String) {
+    Page(page: $page, perPage: $perPage) {
+        pageInfo {
+            total
+            currentPage
+            lastPage
+            hasNextPage
+            perPage
+        }
+        media (search: $search, type: ANIME) {
+            title {
+                english
+            }
+            id
+            episodes
+            coverImage {
+                extraLarge
+            }
+            status
+          }
     }
 }
 `;
 
-async function getShow(showName) {
+
+async function getShow(anime) {
     const variables = {
-        search: showName,
+        search: anime.name,
         page: 1,
         perPage: 5
     }
@@ -37,27 +51,54 @@ async function getShow(showName) {
             tooMany = true;
             console.log("Too many requests to anilist, waiting...");
             await sleep(2000);
-            const result = await getShow(showName);
+            const result = await getShow(anime);
             return result;
         }
         else if (err.response.status == 404) {
             tooMany = true;
-            return {
-                name: showName,
-                id: "Unknown",
-                coverImage: "static/img/nocover.png"
-            }
+            return undefined;
+        }
+        else {
+            console.log(err);
         }
     });
 
     if (tooMany) return response;
 
-    console.log(response.data.data);
+    if (response == undefined) {
+        return {
+            name: anime.name,
+            id: "Unknown",
+            coverImage: "static/img/nocover.png"
+        }
+    }
+
+    let media = response.data.data.Page.media;
+
+    console.log(anime);
+    console.log(response.data.data.Page.media);
+
+    let episodeCounter = anime.episode;
+    let index = 0;
+    while (media[index] != undefined && episodeCounter > media[index].episodes) {
+        console.log(episodeCounter);
+        episodeCounter -= media[index].episodes;
+        index++;
+        console.log(`Episodes left: ${episodeCounter}\n Index: ${index}`);
+    }
+    console.log(`Episodes left: ${episodeCounter}\n Index: ${index}`);
+    
+    let showName = media[index].title.english;
+    let id = media[index].id;
+    let coverImage = media[index].coverImage.extraLarge;
+
+    console.log(media[index]);
+    console.log(showName);
 
     return {
         name: showName,
-        id: response.data.data.Media.id,
-        coverImage: response.data.data.Media.coverImage.extraLarge
+        id: id,
+        coverImage: coverImage
     }
 }
 
