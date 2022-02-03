@@ -63,15 +63,16 @@ async function addShowsToCalendar(shows) {
             dayOfWeek = anime.time.dayOfWeek;
             dayShows = [];
         }
-
+        let matchFound = false;
         for (let j = 0; j < knownShows.length; j++) {
-            if (knownShows[j].name.includes(anime.name)) {
+            if (knownShows[j].name.toLowerCase().includes(anime.name.toLowerCase())) {
                 const currentShow = new teamup.Show(knownShows[j].name, anime.movie, anime.season, anime.episode, anime.platforms, knownShows[j].anilistID, knownShows[j].showImg, anime.time);
-                // console.log(currentShow);
                 dayShows.push(currentShow);
+                matchFound = true;
                 break;
             }
         }
+        if (!matchFound) console.log(`No match for ${anime.name}`);
     }
 
     return cal;

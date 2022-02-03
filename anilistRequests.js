@@ -28,8 +28,13 @@ query fetchShow ($page: Int, $perPage: Int, $search: String) {
 
 
 async function getShow(anime) {
+    let nameOverride = anime.name;
+    if (anime.name == "LUPIN THE 3RD PART 1") {
+        nameOverride = "Lupin the 3rd";
+    }
+
     const variables = {
-        search: anime.name,
+        search: nameOverride,
         page: 1,
         perPage: 5
     }
@@ -66,6 +71,7 @@ async function getShow(anime) {
     if (tooMany) return response;
 
     if (response == undefined) {
+        console.log(`No show for ${anime.name}, using defaults`);
         return {
             name: anime.name,
             id: "Unknown",
@@ -75,26 +81,33 @@ async function getShow(anime) {
 
     let media = response.data.data.Page.media;
 
-    console.log(anime);
-    console.log(response.data.data.Page.media);
+    // console.log(anime);
+    // console.log(response.data.data.Page.media);
 
     let episodeCounter = anime.episode;
+    if (episodeCounter.toString().includes('-')) {
+        return {
+            name: anime.name,
+            id: media[0].id,
+            coverImage: media[0].coverImage.extraLarge,
+        }
+    }
+
     let index = 0;
     while (media[index] != undefined && episodeCounter > media[index].episodes) {
-        console.log(episodeCounter);
         episodeCounter -= media[index].episodes;
         index++;
-        console.log(`Episodes left: ${episodeCounter}\n Index: ${index}`);
     }
-    console.log(`Episodes left: ${episodeCounter}\n Index: ${index}`);
+    // console.log(`Episodes left: ${episodeCounter}\n Index: ${index}`);
     
     let showName = media[index].title.english;
     let id = media[index].id;
     let coverImage = media[index].coverImage.extraLarge;
 
-    console.log(media[index]);
-    console.log(showName);
+    // console.log(media[index]);
+    // console.log(showName);
 
+    if (showName.toLowerCase() != anime.name.toLowerCase()) showName = anime.name;
     return {
         name: showName,
         id: id,

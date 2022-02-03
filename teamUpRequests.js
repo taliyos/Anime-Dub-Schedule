@@ -42,7 +42,6 @@ async function getShows() {
 
     let calStartDate = new Date();
     calStartDate.setDate(calStartDate.getDate() - 7);
-    console.log(calStartDate);
     let start = `${calStartDate.getUTCFullYear()}-${calStartDate.getUTCMonth() + 1}-${calStartDate.getUTCDate()}`;
     var end = today.getUTCFullYear()+"-"+(today.getUTCMonth()+2)+"-"+today.getUTCDate();
     var url = `https://api.teamup.com/ksdhpfjcouprnauwda/events?startDate=`+start+`&endDate=`+end;
