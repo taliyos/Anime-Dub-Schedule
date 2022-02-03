@@ -65,8 +65,8 @@ async function addShowsToCalendar(shows) {
         }
 
         for (let j = 0; j < knownShows.length; j++) {
-            if (knownShows[j].name == anime.name) {
-                const currentShow = new teamup.Show(anime.name, anime.movie, anime.season, anime.episode, anime.platforms, knownShows[j].anilistID, knownShows[j].showImg, anime.time);
+            if (knownShows[j].name.includes(anime.name)) {
+                const currentShow = new teamup.Show(knownShows[j].name, anime.movie, anime.season, anime.episode, anime.platforms, knownShows[j].anilistID, knownShows[j].showImg, anime.time);
                 // console.log(currentShow);
                 dayShows.push(currentShow);
                 break;
@@ -84,14 +84,15 @@ async function findNewShows(shows) {
     for (let i = 0; i < shows.length; i++) {
         let found = false;
         for (let j = 0; j < knownShows.length; j++) {
-            if (shows[i].name == knownShows[j].name) {
+            if (knownShows[j].name.toLowerCase().includes(shows[i].name.toLowerCase())) {
                 found = true;
                 break;
             }
         }
         if (!found) {
             // We need to find the show and add it to the JSON
-            knownShows.push(await addShow(shows[i]));
+            const response = await addShow(shows[i]);
+            if (response != undefined) knownShows.push(response);
         }
     }
 
@@ -101,7 +102,7 @@ async function findNewShows(shows) {
 async function addShow(show) {
     // Query AniList
     console.log(`Adding ${show.name}`);
-    const anilistInfo = await anilist.getShow(show.name);
+    const anilistInfo = await anilist.getShow(show);
     // console.log(anilistInfo);
 
     // Add the following to the JSON
@@ -111,10 +112,14 @@ async function addShow(show) {
     // show img url
     // ----
     let data = {
-        name: show.name,
+        name: anilistInfo.name,
         anilistID: anilistInfo.id,
         showImg: anilistInfo.coverImage
     };
+
+    for (let i = 0; i < knownShows.length; i++) {
+        if (data.anilistID == knownShows.anilistID) return undefined;
+    }
     
     showDataToWrite.push(data);
 
