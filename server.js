@@ -18,4 +18,7 @@ app.use(`/`, scheduleRouter.router);
 app.listen(port, async () => {
     console.log(`Listening for connections at http://localhost:${port}`);
     await scheduleRouter.updateCalendar();
+    setInterval(async () => {
+        await scheduleRouter.updateCalendar();
+    }, 900000);
 })

@@ -14,6 +14,7 @@ router.get(`/calendar`, async(req, res) => {
 });
 
 async function updateCalendar() {
+    console.log("Updating Calendar...");
     let shows = await teamup.updateTeamUp();
     let cal = await calendar.process(shows.shows);
     return cal;
