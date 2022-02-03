@@ -1,5 +1,23 @@
+@font-face {
+  font-family: "Montserrat-Regular";
+  src: url("/static/fonts/Montserrat/Montserrat-Regular.ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Montserrat-Bold";
+  src: url("/static/fonts/Montserrat/Montserrat-Bold.ttf");
+  font-weight: 600;
+  font-style: bold;
+}
+@font-face {
+  font-family: "Montserrat-ExtraBold";
+  src: url("/static/fonts/Montserrat/Montserrat-ExtraBold.ttf");
+  font-weight: 800;
+  font-style: extra-bold;
+}
 body {
-  font-family: Prompt;
+  font-family: Montserrat-Regular;
   background: #1e272e;
   background-image: linear-gradient(184deg, #1e272e 0, rgba(15, 24, 31, 0.75) 75vh);
   min-height: 100vh;
@@ -95,6 +113,9 @@ body {
   width: 85vw;
   height: 100%;
 }
+.main .showSection .shows .dayOfWeek {
+  font-family: Montserrat-Bold;
+}
 .main .showSection .shows .showImages {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -167,7 +188,7 @@ body {
           transform: scale(0.9);
 }
 .main .showSection .shows .showImages .show .showHover .showName {
-  font-weight: 600;
+  font-family: Montserrat-ExtraBold;
 }
 .main .showSection .shows .showImages .show:hover {
   cursor: pointer;
