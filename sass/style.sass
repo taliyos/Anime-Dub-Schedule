@@ -17,7 +17,7 @@
     font-style: extra-bold
     
 body
-    font-family: Montserrat-Regular
+    font-family: "Montserrat-Regular"
     background: rgba(30, 39, 46,1.0)
     background-image: linear-gradient(184deg,rgba(30, 39, 46,1.0) 0,rgba(15, 24, 31,0.75) 75vh)
     min-height: 100vh
@@ -61,9 +61,6 @@ body
         div
             font-size: 1.25rem
             font-weight: 300
-            img
-                width: 1.25rem
-                margin-right: 0.75rem
     .showSection
         display: flex
         flex-direction: row
@@ -104,13 +101,50 @@ body
                         width: 100
                         height: 100%
                         img
-                            max-width: 100%
+                            min-width: 100%
                             max-height: 100%
                             border: 0.15rem transparent solid
                             border-radius: 0.35rem
                             transition: box-shadow 0.15s ease-in-out
                             transition: border-color 0.15s ease-in-out
                             object-fit: cover
+                        .platforms
+                            position: absolute
+                            top: 0.5rem
+                            left: calc(100% - 3rem)
+                            width: 2.5rem
+                            height: 100%
+
+                            display: flex
+                            flex-direction: column
+                            align-items: center
+                            justify-content: flex-start
+                            gap: 0.5rem
+
+                            .platform
+                                width: 2.5rem
+                                height: 2.5rem
+
+                                border-radius: 100%
+                                background: linear-gradient(184deg, rgba(255,255,255,1) 0%, rgba(218,228,255,1) 75%)
+
+                                display: flex
+                                justify-content: center
+                                align-items: center
+                                text-decoration: none
+                                color: black
+                                font-weight: bolder
+                                img
+                                    padding: 0
+                                    margin: 0
+                                    max-width: 90%
+                                    min-width: 90%
+                                    max-height: 90%
+                                    border: none
+                                    text-align: center
+                                    font-size: 1.5rem
+                            .platform:hover
+                                box-shadow: 0 0 0.3rem white
                     .showHover
                         position: absolute
                         display: flex
@@ -143,4 +177,10 @@ body
                     .showHover
                         opacity: 1
                         transform: scale(1)
+                    .platforms
+                        border: none
+                        box-shadow: none
+                        img
+                            border: none
+                            box-shadow: none
                         

@@ -85,7 +85,7 @@ function addShowToScreen(anime, shows, showSection, showImages) {
     let showMinutesSpan = document.createElement("span");
     showMinutesSpan.className = "minutes";
     let min = releaseTime.getMinutes();
-    if (min < 10) min = "0" + releaseTime.getMinutes().toString();
+    if (min < 10) min = `0${releaseTime.getMinutes().toString()}`;
     showMinutesSpan.textContent = min;
     let showNoonSpan = document.createElement("span");
     showNoonSpan.className = "half";
@@ -100,16 +100,19 @@ function addShowToScreen(anime, shows, showSection, showImages) {
     showEpisodeContainer.className = "episode";
     showEpisodeContainer.textContent = getEpisodeAndSeason(anime.episode, anime.season, anime.movie);
 
-    let showPlatformsContainer = document.createElement("div");
-    showPlatformsContainer.className = "platforms";
-    showPlatformsContainer.innerHTML = getPlatforms(anime.platforms)
+
+    // Platforms
+    let showPlatformsContainer = getPlatformHTML(anime.platforms);
+
+
+    // showPlatformsContainer.innerHTML = getPlatforms(anime.platforms)
 
     showArtContainer.appendChild(showImg);
+    showArtContainer.appendChild(showPlatformsContainer);
 
     showHoverContainer.appendChild(showNameContainer);
     showHoverContainer.appendChild(showTimeContainer);
     showHoverContainer.appendChild(showEpisodeContainer);
-    showHoverContainer.appendChild(showPlatformsContainer);
 
     showContainer.appendChild(showArtContainer);
     showContainer.appendChild(showHoverContainer);
@@ -121,6 +124,7 @@ function addShowToScreen(anime, shows, showSection, showImages) {
     document.getElementsByClassName("main")[0].appendChild(showSection);
 }
 
+// Adds a new date row to the schedule
 function addDate(month, day, dayOfWeek, showSection, showImages) {
     schedule.push(new ScheduleDate(month, day));
 
@@ -150,38 +154,59 @@ function addDate(month, day, dayOfWeek, showSection, showImages) {
     return html_shows;
 }
 
+// Returns formatted string for episode
 function getEpisodeAndSeason(episode, season, movie) {
-    if (season == null || movie) {
-        if (episode == -1) {
-            return "Movie";
-        }
-        return "Episode " + episode;
-    }
-    return "Season " + season + " Episode " + episode;
+    if (movie) return "Movie";
+    return `Episode ${episode}`;
 }
 
-function getPlatforms(platforms) {
-    let platformHTML = "";
+// Linking to the site's main page is temporary.
+// In the future this should link to the show page
+// (not specifically the episode)
+function getPlatformHTML(platforms) {
+    let showPlatformsContainer = document.createElement("div");
+    showPlatformsContainer.className = "platforms";
+
     for (let i = 0; i < platforms.length; i++) {
+        let site = document.createElement("a");
+        site.className = "platform";
+        let siteImg = document.createElement("img");
         if (platforms[i] == 0) {
-            platformHTML += "<img src=\"static/icons/Funimation.png\"/>"+"Funimation ";
-        } else if (platforms[i] == 1) {
-            platformHTML += "<img src=\"static/icons/Crunchyroll.png\"/>"+"Crunchyroll ";
+            site.href = "https://www.funimation.com";
+            siteImg.src = "static/icons/Funimation.png";
+            siteImg.alt = "Funimation";
+        }
+        else if (platforms[i] == 1) {
+            site.href = "https://www.crunchyroll.com";
+            siteImg.src = "static/icons/Crunchyroll.png";
+            siteImg.alt = "Crunchyroll";
         }
         else if (platforms[i] == 2) {
-            platformHTML += "<img src=\"static/icons/HiDive.png\"/>"+"HiDive ";
+            site.href = "https://www.hidive.com";
+            siteImg.src = "static/icons/HiDive.png";
+            siteImg.alt = "HiDive";
         }
         else if (platforms[i] == 3) {
-            platformHTML += "<img src=\"static/icons/Netflix.png\"/>"+"Netflix ";
+            site.href = "https://www.netflix.com";
+            siteImg.src = "static/icons/Netflix.png";
+            siteImg.alt = "Netflix";
         }
         else if (platforms[i] == 4) {
-            platformHTML += "Other Streaming";
-        } 
-        else {
-            platformHTML += "Home Video Only";
+            site.href = "";
+            siteImg.src = "";
+            siteImg.alt = "?";
         }
+        else if (platforms[i] == 5) {
+            site.href = "";
+            siteImg.src = "static/img/disc.png";
+            siteImg.alt = "Home Video";
+        }
+
+        site.appendChild(siteImg);
+        showPlatformsContainer.appendChild(site);
     }
-    return platformHTML;
+
+    return showPlatformsContainer;
 }
 
 getCalendar();
