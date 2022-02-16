@@ -99,7 +99,9 @@ async function getShow(anime) {
         index++;
     }
     // console.log(`Episodes left: ${episodeCounter}\n Index: ${index}`);
-    
+    if (media[index] == null) {
+        index = 0;
+    }
     let showName = media[index].title.english;
     let id = media[index].id;
     let coverImage = media[index].coverImage.extraLarge;
