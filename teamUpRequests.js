@@ -95,6 +95,14 @@ function getShowDate(item) {
 }
 
 function getShowTitle(item) {
+    // Special case for Attack on Titan, which has a different format
+    if (item.title.includes("Attack on Titan| Final Season Part 2")) {
+        return {
+            "name": "Attack on Titan Final Season Part 2",
+            "movie": false,
+        };
+    }
+
     let match = /[A-Z]/.exec(item.title);
     let endOfTitle = item.title.indexOf(`|`);
     let movie = false;
