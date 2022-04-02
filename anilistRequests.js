@@ -32,6 +32,9 @@ async function getShow(anime) {
     if (anime.name == "LUPIN THE 3RD PART 1") {
         nameOverride = "Lupin the 3rd";
     }
+    else if (anime.name.includes("Finale")) {
+        nameOverride = anime.name.substring(0, anime.name.indexOf("Finale"));
+    }
 
     const variables = {
         search: nameOverride,
@@ -70,7 +73,7 @@ async function getShow(anime) {
 
     if (tooMany) return response;
 
-    if (response == undefined) {
+    if (response.data.data.Page.media == null || response.data.data.Page.media.length == 0) {
         console.log(`No show for ${anime.name}, using defaults`);
         return {
             name: anime.name,
@@ -83,7 +86,7 @@ async function getShow(anime) {
 
     // console.log(anime);
     // console.log(response.data.data.Page.media);
-
+    //console.log(media);
     let episodeCounter = anime.episode;
     if (episodeCounter.toString().includes('-')) {
         return {
