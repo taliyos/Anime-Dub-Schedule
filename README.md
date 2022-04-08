@@ -8,7 +8,7 @@ Live at [talios.software](https://talios.software)
 
 Despite the lack of updates on this repository, the next major update is underway! The next version will be hosted in a new repository since there is a major technology change. (React + Server) The primary reason for this is to move away from being in pure JS, which can cause some oddities in the code and bonuses as helping me get up to speed on React. This update will also include AniList integration and should be done soon. I'm currently finishing up classes, so I'll have a bunch of time to work on it soon. In the meantime, I'll still update this version with bugfixes.
 
-If you're interested in this, you may be interested in another project I'm working on. More details on that once its ready...
+If you're interested in this, you may be interested in another project I'm working on. More details on that once it's ready...
 
 ## Overview
 
