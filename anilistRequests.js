@@ -13,6 +13,7 @@ query fetchShow ($page: Int, $perPage: Int, $search: String) {
         }
         media (search: $search, type: ANIME) {
             title {
+                romaji
                 english
             }
             id
@@ -106,6 +107,8 @@ async function getShow(anime) {
         index = 0;
     }
     let showName = media[index].title.english;
+    console.log(media[index].title);
+    if (showName == null) showName = media[index].title.romaji;
     let id = media[index].id;
     let coverImage = media[index].coverImage.extraLarge;
 
