@@ -84,6 +84,9 @@ async function getShow(anime) {
     }
 
     let media = response.data.data.Page.media;
+    for (let k = 0; k < media.length; k++) {
+        console.log(media[k]);
+    }
 
     // console.log(anime);
     // console.log(response.data.data.Page.media);
@@ -98,7 +101,7 @@ async function getShow(anime) {
     }
 
     let index = 0;
-    while (media[index] != undefined && episodeCounter > media[index].episodes) {
+    while (media[index] != undefined && media[index].episodes != null && episodeCounter > media[index].episodes) {
         episodeCounter -= media[index].episodes;
         index++;
     }
