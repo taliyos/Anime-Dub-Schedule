@@ -103,7 +103,7 @@ function getShowTitle(item) {
         };
     }
 
-    let match = /[A-Za-z.]/.exec(item.title);
+    let match = /[A-Za-z]/.exec(item.title);
     let endOfTitle = item.title.indexOf(`|`);
     let movie = false;
     if (endOfTitle == -1) endOfTitle = item.title.length + 1;
