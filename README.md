@@ -2,6 +2,9 @@
 
 > A better name at some point?
 
+React version is now live and this version will no longer be maintained. Check it out at https://github.com/taliyos/AniDub-Schedule-Server and https://github.com/taliyos/Anime-Dub-Schedule-React
+
+
 Live at [talios.software](https://talios.software)
 
 ## Note
